@@ -15,7 +15,10 @@
 		)
 	</insert>
 
-	<select id="countByName" resultType="int" parameterType="string">
-		SELECT COUNT(*) FROM CONVENIENCE_STORES WHERE CS_NAME = #{name}
-	</select>
+    <!-- 중복 확인 -->
+    <select id="isDuplicateStore" resultType="int">
+        SELECT COUNT(1)
+        FROM CONVENIENCE_STORES2
+        WHERE CS_NAME = #{csName}
+    </select>
 </mapper>

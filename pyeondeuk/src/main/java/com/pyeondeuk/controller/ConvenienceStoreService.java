@@ -5,6 +5,7 @@ import com.pyeondeuk.model.ConvenienceStoreDTO;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.List;
+import java.util.Map;
 
 public class ConvenienceStoreService {
 
@@ -17,8 +18,9 @@ public class ConvenienceStoreService {
                     continue;
                 }
 
-                // Check if the place already exists
-                int count = session.selectOne("com.pyeondeuk.db.ConvenienceStoreMapper.countByName", store.getCsName());
+                // Check if the store already exists
+                int count = session.selectOne("com.pyeondeuk.db.ConvenienceStoreMapper.isDuplicateStore", 
+                	    Map.of("csName", store.getCsName(), "roadAddressName", store.getRoadAddressName()));
                 if (count > 0) {
                     System.out.println("Skipping duplicate store: " + store.getCsName());
                     continue;

@@ -32,7 +32,7 @@ public class GetConvenienceStore {
     private static final String KEYWORD = URLEncoder.encode("편의점", StandardCharsets.UTF_8);
     private static final double LAT_START = 34.0;
     private static final double LAT_END = 35.5;
-    private static final double LNG_START = 126.0; // 여기가 정적 상수 선언입니다.
+    private static final double LNG_START = 126.0; 
     private static final double LNG_END = 127.5;
     private static final double STEP = 0.005;
     private static final int RADIUS = 700;
