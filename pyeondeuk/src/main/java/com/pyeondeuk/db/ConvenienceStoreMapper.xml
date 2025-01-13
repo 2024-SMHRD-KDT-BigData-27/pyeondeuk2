@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pyeondeuk.db.ConvenienceStoreMapper">
+
+	<insert id="insertConvenienceStore"
+		parameterType="com.pyeondeuk.model.ConvenienceStoreDTO">
+		INSERT INTO CONVENIENCE_STORES2 (
+		CS_SEQ, LONGITUDE, LATITUDE, BRAND_SEQ, ADDRESS, ROAD_ADDRESS, CS_NAME,
+		CREATED_AT
+		) VALUES (
+		CONVENIENCE_STORES_SEQ.NEXTVAL, #{longitude}, #{latitude}, #{brandSeq},
+		#{addressName}, #{roadAddressName}, #{csName}, SYSDATE
+		)
+	</insert>
+
+	<select id="countByName" resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM CONVENIENCE_STORES WHERE CS_NAME = #{name}
+	</select>
+</mapper>
