@@ -5,20 +5,29 @@
 
 <configuration>
 
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC"/>
-            <dataSource type="POOLED">
-                <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
-                <property name="url" value="jdbc:oracle:thin:@project-db-cgi.smhrd.com:1524:xe"/>
-                <property name="username" value="cgi_24K_bigdata27_p2_3"/>
-                <property name="password" value="smhrd3"/>
-            </dataSource>
-        </environment>
-    </environments>
-    
-    <!-- 매퍼 설정 -->
-    <mappers>
-        <mapper resource="com/pyeondeuk/db/ConvenienceStoreMapper.xml"/>
-    </mappers>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver"
+					value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url"
+					value="jdbc:oracle:thin:@project-db-cgi.smhrd.com:1524:xe" />
+				<property name="username" value="cgi_24K_bigdata27_p2_3" />
+				<property name="password" value="smhrd3" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<!-- 매퍼 설정 -->
+	<mappers>
+		<mapper resource="com/pyeondeuk/db/ConvenienceStoreMapper.xml" />
+	</mappers>
+
+
 </configuration>
+

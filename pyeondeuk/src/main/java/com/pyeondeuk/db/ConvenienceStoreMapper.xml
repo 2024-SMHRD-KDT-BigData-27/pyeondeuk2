@@ -6,19 +6,56 @@
 
 	<insert id="insertConvenienceStore"
 		parameterType="com.pyeondeuk.model.ConvenienceStoreDTO">
-		INSERT INTO CONVENIENCE_STORES2 (
-		CS_SEQ, LONGITUDE, LATITUDE, BRAND_SEQ, ADDRESS, ROAD_ADDRESS, CS_NAME,
-		CREATED_AT
-		) VALUES (
-		CONVENIENCE_STORES_SEQ.NEXTVAL, #{longitude}, #{latitude}, #{brandSeq},
-		#{addressName}, #{roadAddressName}, #{csName}, SYSDATE
+		INSERT INTO CONVENIENCE_STORES (
+		CS_SEQ, LONGITUDE, LATITUDE, BRAND_SEQ, ADDRESS, ROAD_ADDRESS, CS_NAME, CREATED_AT
+		) VALUES
+		(
+		CONVENIENCE_STORES_SEQ.NEXTVAL, #{longitude}, #{latitude}, #{brandSeq}, #{addressName}, #{roadAddressName}, #{csName}, SYSDATE
 		)
 	</insert>
 
-    <!-- 중복 확인 -->
-    <select id="isDuplicateStore" resultType="int">
-        SELECT COUNT(1)
-        FROM CONVENIENCE_STORES2
-        WHERE CS_NAME = #{csName}
+	<!-- 중복 확인 -->
+	<select id="isDuplicateStore" resultType="int">
+		SELECT COUNT(1)
+		FROM
+		CONVENIENCE_STORES
+		WHERE CS_NAME = #{csName}
+	</select>
+
+	<select id="getNearbyStores"
+		resultType="com.pyeondeuk.model.ConvenienceStoreDTO">
+		SELECT
+		CS_NAME AS csName,
+		ROAD_ADDRESS AS roadAddressName,
+		ADDRESS AS addressName,
+		LONGITUDE AS longitude,
+		LATITUDE AS latitude,
+		CS_TAG AS csTag,
+		CS_NICK AS csNick,
+		BRAND_SEQ AS brandSeq,
+		CS_SEQ AS csSeq
+		FROM CONVENIENCE_STORES
+		WHERE POWER(LATITUDE - #{latitude}, 2) + POWER(LONGITUDE - #{longitude}, 2) &lt;= POWER(#{radius} / 111.32, 2)
+	</select>
+
+	<select id="getAverageRating" parameterType="int" resultType="double">
+		SELECT AVG(RATING)
+		FROM CSREVIEW
+		WHERE CS_SEQ = #{csSeq}
+	</select>
+	
+	<!-- 리뷰 가져오기 -->
+    <select id="getReviewsForStore" parameterType="int" resultType="string">
+        SELECT COMMENT_CONTENT
+        FROM CSREVIEW
+        WHERE CS_SEQ = #{csSeq}
     </select>
+
+    <!-- 별명과 태그 업데이트 -->
+    <update id="updateNickAndTag">
+        UPDATE CONVENIENCE_STORES
+        SET CS_NICK = #{csNick}, CS_TAG = #{csTag}
+        WHERE CS_SEQ = #{csSeq}
+    </update>
+
 </mapper>
