@@ -9,7 +9,7 @@ import java.io.IOException;
 public class OpenAITest {
 
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
-    private static final String API_KEY = "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"; // OpenAI API 키
+    private static final String API_KEY = """; // OpenAI API 키
 
     public static void main(String[] args) {
         try {
